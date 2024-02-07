@@ -1,0 +1,505 @@
+:root {
+  --color: rgb(0, 24, 58);
+  --background-1: rgb(240, 240, 240);
+  --background-2: rgb(255, 255, 255);
+}
+
+[theme="dark"] {
+  --color: rgb(240, 240, 240);
+  --background-1: rgb(0, 24, 58);
+  --background-2: rgb(0, 0, 0);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+}
+
+/* ---------------
+HEADER
+--------------- */
+
+header {
+  width: 100%;
+  color: var(--color);
+  background-color: var(--background-2);
+  padding: 1.2rem 4rem;
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 1rem;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  font-family: "Montserrat Alternates", sans-serif;
+  z-index: 1;
+}
+
+.right-header {
+  display: flex;
+}
+
+.view-mode .block-view,
+.view-mode .row-view,
+#sort {
+  display: inline-block;
+  appearance: none;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 3px;
+  border: solid 1px var(--color);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 70%;
+  box-shadow: inset 0.1rem 0.1rem 0.1rem rgba(255, 255, 255),
+    inset -0.1rem -0.1rem 0.1rem rgba(0, 0, 0, 0.2);
+}
+
+.view-mode .block-view {
+  background-image: url(./image/block-view.svg);
+}
+.view-mode .row-view {
+  background-image: url(./image/row-view.svg);
+}
+.view-mode .block-view:checked,
+.view-mode .row-view:checked {
+  box-shadow: inset -0.1rem -0.1rem 0.1rem rgba(255, 255, 255),
+    inset 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0.2);
+  background-color: var(--background-1);
+}
+
+[theme="dark"] .view-mode .block-view,
+[theme="dark"] .view-mode .row-view,
+[theme="dark"] .view-mode .block-view:checked,
+[theme="dark"] .view-mode .row-view:checked,
+[theme="dark"] #sort {
+  box-shadow: none;
+  border-color: var(--color);
+}
+
+#sort {
+  color: transparent;
+  background: url(./image/swap-vertical.svg);
+  margin-left: 2rem;
+  margin-right: 1rem;
+  position: relative;
+}
+
+.sort-button-box {
+  width: 6rem;
+  background-color: red;
+  position: absolute;
+  top: 2.5rem;
+  right: 0;
+  border: 2px solid var(--color);
+}
+
+.sort-button-box.hide {
+  display: none;
+}
+
+.sort-button {
+  width: 100%;
+  margin: 0;
+  padding: 0.4rem;
+  border: none;
+  border-radius: 0;
+  background-color: var(--background-1);
+  color: var(--color);
+  font-family: montserrat, sans-serif;
+  cursor: pointer;
+}
+
+.sort-button:nth-last-of-type(n + 2) {
+  border-bottom: 1px solid var(--color);
+}
+
+.sort-button:hover {
+  background-color: var(--background-2);
+}
+
+.theme-toggle {
+  width: 2rem;
+  height: 2rem;
+  appearance: none;
+  margin-left: 1rem;
+  background: url(./image/light-mode.svg) center no-repeat;
+  transition: all 1s;
+}
+
+.theme-toggle:checked {
+  background: url(./image/dark-mode.svg) center no-repeat;
+  transform: rotate(360deg);
+}
+
+/* ---------------
+MAIN
+--------------- */
+
+/* Circle */
+
+.circle {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  border: var(--color) 3px solid;
+  color: var(--color);
+  background-color: transparent;
+  font-size: 2rem;
+  display: grid;
+  place-items: center;
+  transition: all 0.2s;
+  user-select: none;
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  cursor: pointer;
+}
+
+.vertical-plus-line,
+.horizontal-plus-line {
+  background-color: var(--color);
+  height: 0.2rem;
+  width: 1.1rem;
+  position: absolute;
+  transition: all 0.3s;
+}
+
+.vertical-plus-line {
+  transform: rotate(90deg);
+}
+
+.circle:hover {
+  transform: scale(1.1);
+}
+
+/* Card (Row view) */
+
+main {
+  background-color: var(--background-1);
+  width: 100%;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: min-content;
+  justify-items: center;
+  padding: 7rem 0rem;
+}
+
+.card {
+  color: var(--color);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  position: relative;
+  padding-right: 5rem;
+  min-height: 2.2rem;
+  height: min-content;
+  border-bottom: 1px solid var(--color);
+  transition: all 0.5s;
+}
+
+.delete-icon {
+  position: absolute;
+  width: 1.4rem;
+  top: 25%;
+  right: 1.8rem;
+  cursor: pointer;
+}
+
+.delete-icon:hover {
+  animation: shake 0.2s linear 3;
+  transform: scale(1.2);
+}
+
+.book-author,
+.book-pages {
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.book-author {
+  flex: 0 1 10rem;
+  padding-left: 4rem;
+}
+
+.book-title {
+  font-weight: 700;
+  flex: 1 1 10rem;
+  padding-left: 2rem;
+}
+
+.book-pages {
+  flex: 0 0 8rem;
+  text-align: center;
+}
+
+.book-icon {
+  width: 1.8rem;
+  margin-left: 1rem;
+  position: relative;
+}
+
+.book-status {
+  position: absolute;
+  bottom: 0.2rem;
+  right: 4.6rem;
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  background-color: red;
+  border-radius: 50%;
+  outline: 3px solid var(--background-1);
+  cursor: pointer;
+  box-shadow: inset -2px -2px 2px rgba(0, 0, 0, 0.5),
+    inset 2px 2px 2px rgba(255, 255, 255, 0.5);
+}
+
+.book-status:active {
+  box-shadow: inset 2px 2px 2px rgba(0, 0, 0, 0.5),
+    inset -2px -2px 2px rgba(255, 255, 255, 0.5);
+}
+.book-status:checked {
+  background-color: rgb(11, 170, 11);
+}
+
+.rating {
+  display: flex;
+  flex: 0 0 9rem;
+  flex-direction: row-reverse;
+  justify-content: center;
+  margin: 0.5rem 0;
+  position: relative;
+  bottom: 0.1rem;
+}
+
+/* Card (block view) */
+
+main.block {
+  background-color: var(--background-1);
+  width: 100%;
+  min-height: 100vh;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  justify-items: center;
+  grid-auto-rows: min-content;
+  padding: 7rem 4rem;
+}
+
+.card.block {
+  display: block;
+  background-color: var(--background-2);
+  height: auto;
+  width: 15rem;
+  border-radius: 5px;
+  padding: 1.5rem 1.5rem 3.5rem;
+  box-shadow: 2px 2px 2px rgb(0, 0, 0, 0.2);
+  text-align: center;
+  outline: solid 2px var(--color);
+  outline-offset: -8px;
+  position: relative;
+  transition: all 0.5s;
+  border: none;
+}
+
+.card.block:hover {
+  transform: scale(1.02);
+  box-shadow: 3px 3px 7px 2px rgb(0, 0, 0, 0.11);
+}
+
+.card.block .delete-icon {
+  position: absolute;
+  width: 1.4rem;
+  top: 1.2rem;
+  right: 1.2rem;
+}
+
+.card.block p {
+  padding-left: 0;
+  padding-bottom: 1rem;
+}
+
+.card.block .book-icon {
+  width: 2rem;
+  position: absolute;
+  bottom: 1rem;
+  right: 1.5rem;
+}
+
+.card.block .book-status {
+  bottom: 0.9rem;
+  right: 1.1rem;
+}
+
+.card.block .book-status:active {
+  box-shadow: inset 2px 2px 2px rgba(0, 0, 0, 0.5),
+    inset -2px -2px 2px rgba(255, 255, 255, 0.5);
+}
+.card.block .book-status:checked {
+  background-color: rgb(11, 170, 11);
+}
+
+/* Rating */
+
+.card.block .rating {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: start;
+  margin: 0.5rem 0;
+  position: absolute;
+  bottom: 0.7rem;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+.rating-label {
+  position: relative;
+  width: 1.1em;
+  font-size: 1.3rem;
+  color: var(--color);
+  cursor: pointer;
+}
+
+.rating-label::before {
+  content: "\2605";
+  position: absolute;
+  opacity: 0;
+}
+
+.rating-label:hover:before,
+.rating-label:hover ~ label:before {
+  opacity: 1;
+}
+
+.rating-label:has([type="radio"]:checked):before,
+.rating-label:has([type="radio"]:checked) ~ .rating-label:before {
+  opacity: 1;
+}
+
+/* ---------------
+DIALOG
+--------------- */
+
+dialog {
+  background-color: var(--background-1);
+  color: var(--color);
+  border: none;
+  width: min(80%, 20rem);
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  padding: 2rem;
+  border-radius: 10px;
+  outline: var(--color) 2px solid;
+  outline-offset: -8px;
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 24, 58, 0.92);
+  backdrop-filter: blur(2px);
+}
+
+form > p:first-of-type {
+  text-align: center;
+  border-bottom: solid var(--color) 1px;
+  padding-bottom: 0.4rem;
+}
+
+.input-block {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.9rem;
+  font-size: 0.8rem;
+}
+
+.input-block input {
+  height: 2rem;
+  padding: 0.7rem;
+  border-radius: 5px;
+  border: none;
+  box-shadow: inset 2px 2px 2px rgb(0, 0, 0, 0.2);
+  margin-top: 0.2rem;
+}
+
+.input-block input::placeholder {
+  font-family: "Montserrat", sans-serif;
+  color: rgb(200, 200, 200);
+}
+
+.check-block,
+.rating-block {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.9rem;
+  font-size: 0.8rem;
+}
+
+.check-block input {
+  accent-color: var(--color);
+}
+
+.rating-block {
+  display: none;
+  height: 1.2rem;
+}
+
+.rating-block.show {
+  display: flex;
+}
+
+.rating-block .rating {
+  position: relative;
+  bottom: 1rem;
+}
+
+dialog button {
+  width: 100%;
+  margin-top: 0.7rem;
+  height: 2rem;
+  background-color: var(--color);
+  border-radius: 5px;
+  color: var(--background-1);
+  cursor: pointer;
+  border: none;
+}
+
+dialog button:hover {
+  background-color: rgb(0, 0, 133);
+}
+
+[theme="dark"] dialog button:hover {
+  color: var(--color);
+}
+
+/* ------------
+ANIMATION
+-------------*/
+
+@keyframes shake {
+  0% {
+    transform: rotate(0deg) scale(1.2);
+  }
+  25% {
+    transform: rotate(-15deg) scale(1.2);
+  }
+  50% {
+    transform: rotate(0deg) scale(1.2);
+  }
+  75% {
+    transform: rotate(15deg) scale(1.2);
+  }
+  100% {
+    transform: rotate(0deg) scale(1.2);
+  }
+}
